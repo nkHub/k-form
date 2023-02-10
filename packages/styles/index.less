@@ -1,0 +1,35 @@
+.k-form-list {
+  // 存在高度不一致换行的问题
+  &>.ant-row>.ant-col{
+    min-height: 66px;
+    &>.ant-form-item{
+      min-height: 42px;
+      .ant-form-explain,
+      .ant-form-extra{
+        min-height: 24px;
+      }
+    }
+  }
+
+  // label
+  .ant-form-item-label {
+    font-size: 12px;
+  }
+
+  // hide
+  .ant-col.hide {
+    display: none;
+  }
+
+  // title
+  .form-title {
+    line-height: 40px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .k-form-submit{
+    margin-bottom: 0;
+  }
+}
