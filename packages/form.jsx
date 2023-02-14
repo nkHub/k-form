@@ -1,4 +1,5 @@
 import {
+  Icon,
   Form,
   Tooltip,
   Row,
@@ -11,11 +12,16 @@ import {
   Checkbox,
   Radio,
   Switch,
-  DatePicker
+  Slider,
+  Rate,
+  Cascader,
+  DatePicker,
+  TimePicker,
+  TreeSelect
 } from "ant-design-vue";
 import { assign, getPropsExtends, registerAuto } from "./utils/util";
-import KUpload from './components/upload'
-import checkor from "./mixins/checkor"
+import { KUpload, KYearPicker } from "./components";
+import checkor from "./mixins/checkor";
 import "./styles/index.less";
 
 const FormItem = Form.Item;
@@ -38,18 +44,18 @@ export default {
     },
     // 表单项布局宽度
     layoutCol: {
-      type: Number,
+      type: [Number, Object],
       default: 12,
     },
     // 表单项文字布局宽度
     labelCol: {
-      type: Number,
-      default: 5,
+      type: [Number, Object],
+      default: 6,
     },
     // 表单项表单布局宽度
     wrapperCol: {
-      type: Number,
-      default: 19,
+      type: [Number, Object],
+      default: 18,
     },
     // 表单项布局间隔
     formGap: {
@@ -58,6 +64,11 @@ export default {
     },
     // 是否自更新
     selfUpdate: {
+      type: Boolean,
+      default: true,
+    },
+    // 显示提交行
+    showSubmit: {
       type: Boolean,
       default: true,
     },
@@ -77,6 +88,7 @@ export default {
     };
   },
   created() {
+    // 自动加载内置的组件
     const list = [
       Input,
       InputNumber,
@@ -85,8 +97,14 @@ export default {
       Checkbox.Group,
       Radio.Group,
       Switch,
+      Slider,
+      Rate,
+      TimePicker,
       DatePicker,
-      KUpload
+      TreeSelect,
+      Cascader,
+      KUpload,
+      KYearPicker,
     ];
     registerAuto(this.register, ...list);
   },
@@ -103,7 +121,8 @@ export default {
               value: [
                 item.key,
                 {
-                  valuePropName: component.model.prop || 'value',
+                  valuePropName: component.model.prop || "value",
+                  validateTrigger: component.model.event || "change",
                   ...item.rules,
                 },
               ],
@@ -134,8 +153,8 @@ export default {
     reset() {
       this.form.resetFields();
     },
-    validateFields(callback){
-      this.form.validateFields(callback)
+    validateFields(callback) {
+      this.form.validateFields(callback);
     },
     // 渲染单个表单
     renderItem(item) {
@@ -145,7 +164,9 @@ export default {
       };
       // 标题部分
       const renderTitle = (item) => {
-        return <div class="form-title">{item.title}:</div>;
+        return (
+          <div class="form-title">{item.title}</div>
+        );
       };
       // 渲染表单项基础内容
       const renderFormItemBase = (item, content) => {
@@ -165,9 +186,9 @@ export default {
             <span slot="label">
               <span>{item.name}</span>
               {item.tips ? (
-                <Tooltip v-slot:prefix>
-                  <a-icon style={tipsIconStyle} type="question-circle" />
-                  <div v-slot:title domPropsInnerHTML={item.tips}></div>
+                <Tooltip>
+                  <Icon style={tipsIconStyle} type="question-circle" />
+                  <div slot="title" domPropsInnerHTML={item.tips}></div>
                 </Tooltip>
               ) : null}
             </span>
@@ -195,7 +216,7 @@ export default {
       const switchRender = (item) => {
         let row = null;
         switch (item.type) {
-          case "title":
+          case "block":
             row = renderTitle(item);
             break;
           case "manual":
@@ -219,7 +240,7 @@ export default {
     },
   },
   render() {
-    const that = this
+    const that = this;
     const {
       form,
       layout,
@@ -231,6 +252,7 @@ export default {
       formGap,
       renderItem,
       selfUpdate,
+      showSubmit,
     } = that;
 
     // 保留动态构建表单
@@ -238,11 +260,11 @@ export default {
 
     // 事件
     const eventOn = {
-      submit(e){
-        e.preventDefault()
-        that.$emit('submit', e)
-      }
-    }
+      submit(e) {
+        e.preventDefault();
+        that.$emit("submit", e);
+      },
+    };
 
     return (
       <Form
@@ -257,16 +279,18 @@ export default {
         <Row gutter={formGap}>
           {Array.isArray(formListTmp) ? formListTmp.map(renderItem) : null}
         </Row>
-        <Row type="flex" justify="end">
-          <FormItem class="k-form-submit">
-            <Space>
-              <Button type="primary" html-type="submit">
-                提交
-              </Button>
-              <Button onClick={reset}>重置</Button>
-            </Space>
-          </FormItem>
-        </Row>
+        {showSubmit ? (
+          <Row type="flex" justify="end">
+            <FormItem class="k-form-submit">
+              <Space>
+                <Button type="primary" html-type="submit">
+                  提交
+                </Button>
+                <Button onClick={reset}>重置</Button>
+              </Space>
+            </FormItem>
+          </Row>
+        ) : null}
       </Form>
     );
   },

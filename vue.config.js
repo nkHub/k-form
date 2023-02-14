@@ -23,6 +23,7 @@ module.exports = {
   },
   chainWebpack: (config) => {
     if (isProd && process.env.VUE_CLI_BUILD_TARGET !== 'lib') {
+      // 多入口需要设定入口
       config.plugin('html-index').tap(args => {
         args[0].cdn = cdn
         return args
