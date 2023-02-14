@@ -3,6 +3,15 @@ export const normal = [
   {
     type: 'AInput',
     name: '名称',
+    key: 'hide',
+    hide: true,
+    rules: {
+      initialValue: '隐藏的表单'
+    }
+  },
+  {
+    type: 'AInput',
+    name: '名称',
     key: 'input',
     props: {
       placeholder: '请输入名称',
@@ -272,54 +281,43 @@ export const dynamic = [
       ]
     },
     rules: {
+      initialValue: 'test1',
+      rules: [{ required: false, message: '请选择' }] 
+    }
+  },
+  {
+    type: 'ACheckboxGroup',
+    name: '复选框',
+    key: 'checkbox',
+    props: {
+      options: [
+        {
+          label: '测试1',
+          value: 'test1'
+        },
+        {
+          label: '测试2',
+          value: 'test2'
+        },
+      ]
+    },
+    show: "formData.select === 'test1'",
+    rules: {
+      rules: [{ required: false, message: '请选择' }] 
+    }
+  },
+  {
+    type: 'KYearPicker',
+    name: '年份',
+    key: 'year',
+    props: {
+      valueFormat: 'YYYY',
+      format: 'YYYY',
+      placeholder: '请选择'
+    },
+    rules: {
       rules: [{ required: false, message: '请选择' }] 
     },
-    checkor: [
-      {
-        value: 'test1',
-        children: [
-          {
-            type: 'ACheckboxGroup',
-            name: '复选框',
-            key: 'checkbox',
-            props: {
-              options: [
-                {
-                  label: '测试1',
-                  value: 'test1'
-                },
-                {
-                  label: '测试2',
-                  value: 'test2'
-                },
-              ]
-            },
-            rules: {
-              rules: [{ required: false, message: '请选择' }] 
-            },
-            checkor: [
-              {
-                value: 'test1',
-                children:[
-                  {
-                    type: 'KYearPicker',
-                    name: '年份',
-                    key: 'year',
-                    props: {
-                      valueFormat: 'YYYY',
-                      format: 'YYYY',
-                      placeholder: '请选择'
-                    },
-                    rules: {
-                      rules: [{ required: false, message: '请选择' }] 
-                    }
-                  },
-                ]
-              }
-            ]
-          },
-        ]
-      }
-    ]
+    show: "formData.checkbox.includes('test1')",
   },
 ]

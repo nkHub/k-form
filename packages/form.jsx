@@ -17,18 +17,16 @@ import {
   Cascader,
   DatePicker,
   TimePicker,
-  TreeSelect
+  TreeSelect,
 } from "ant-design-vue";
 import { assign, getPropsExtends, registerAuto } from "./utils/util";
 import { KUpload, KYearPicker } from "./components";
-import checkor from "./mixins/checkor";
 import "./styles/index.less";
 
 const FormItem = Form.Item;
 // 动态表单组件
 export default {
   name: "k-form-list",
-  mixins: [checkor],
   props: {
     // 表单列表
     formList: {
@@ -83,8 +81,8 @@ export default {
         name: "form-list",
         onValuesChange,
       }),
-      // 自定义错误区
-      errors: {},
+      // 表单值的缓存
+      cache: {}
     };
   },
   created() {
@@ -108,7 +106,19 @@ export default {
     ];
     registerAuto(this.register, ...list);
   },
+  watch:{
+    formList:{
+      handler(v){
+        // 循环初始化默认值
+        this.recursive(v)
+      },
+      immediate: true
+    }
+  },
   methods: {
+    /**
+     * 静态表单部分
+     * */ 
     // 注册组件
     register(component) {
       const render = (item, h) => {
@@ -139,6 +149,8 @@ export default {
     onValuesChange(props, values) {
       if (values instanceof Object && Object.keys(values).length === 1) {
         this.$emit("change", values);
+        // 存储缓存
+        this.cache = { ...this.cache, ...values }
       }
     },
     // 获取某个字段的值
@@ -156,47 +168,41 @@ export default {
     validateFields(callback) {
       this.form.validateFields(callback);
     },
+    // 渲染表单项基础猎狗
+    renderFormItemBase(item, content) {
+      const { labelCol, wrapperCol } = this;
+      // 不显示返回的表单类型(会和清除icon冲突)
+      const excludes = ["input", "number", "textarea", "date"];
+      const tipsIconStyle = {
+        margin: "0 2px",
+      };
+      return (
+        <FormItem
+          label-col={{ span: item.labelCol || labelCol }}
+          wrapper-col={{ span: item.wrapperCol || wrapperCol }}
+          hasFeedback={excludes.includes(item.type)}
+          extra={item.extra}
+          help={item.help}
+        >
+          <span slot="label">
+            <span>{item.name}</span>
+            {item.tips ? (
+              <Tooltip>
+                <Icon style={tipsIconStyle} type="question-circle" />
+                <div slot="title" domPropsInnerHTML={item.tips}></div>
+              </Tooltip>
+            ) : null}
+          </span>
+          {/* 自定义内容部分 */}
+          {content}
+        </FormItem>
+      );
+    },
     // 渲染单个表单
     renderItem(item) {
-      const { layoutCol, labelCol, wrapperCol, items: formItems } = this;
+      const { layoutCol, renderFormItemBase, items: formItems } = this;
       const className = {
         hide: item.hide,
-      };
-      // 标题部分
-      const renderTitle = (item) => {
-        return (
-          <div class="form-title">{item.title}</div>
-        );
-      };
-      // 渲染表单项基础内容
-      const renderFormItemBase = (item, content) => {
-        // 不显示返回的表单类型
-        const excludes = ["input", "number", "textarea", "date"];
-        const tipsIconStyle = {
-          margin: "0 2px",
-        };
-        return (
-          <FormItem
-            label-col={{ span: item.labelCol || labelCol }}
-            wrapper-col={{ span: item.wrapperCol || wrapperCol }}
-            hasFeedback={excludes.includes(item.type)}
-            extra={item.extra}
-            help={item.help}
-          >
-            <span slot="label">
-              <span>{item.name}</span>
-              {item.tips ? (
-                <Tooltip>
-                  <Icon style={tipsIconStyle} type="question-circle" />
-                  <div slot="title" domPropsInnerHTML={item.tips}></div>
-                </Tooltip>
-              ) : null}
-            </span>
-
-            {/* 自定义内容部分 */}
-            {content}
-          </FormItem>
-        );
       };
       // 渲染通用表单部分
       const renderFormItem = (item) => {
@@ -213,12 +219,10 @@ export default {
           typeof customRender === "function" && customRender(item)
         );
       };
+      // 切换渲染器
       const switchRender = (item) => {
         let row = null;
         switch (item.type) {
-          case "block":
-            row = renderTitle(item);
-            break;
           case "manual":
             row = renderManual(item);
             break;
@@ -227,7 +231,6 @@ export default {
         }
         return row;
       };
-
       return (
         <Col
           key={item.key}
@@ -238,14 +241,43 @@ export default {
         </Col>
       );
     },
+    /**
+     * 动态表单部分
+     * */ 
+    // 循环收集默认值
+    recursive(v){
+      for(let i = 0; i < v.length; i++){
+        const item = v[i]
+        if(
+          item.rules && item.rules.initialValue !== undefined &&
+          this.cache[item.key] === undefined
+        ){
+          this.cache[item.key] = item.rules.initialValue
+        }
+      }
+    },
+    // 构建表单
+    buildForm(){
+      const { formList, cache } = this
+      return formList.filter(item => {
+        if(item.show === undefined) return true
+        let show = false
+        // 可能会存在报错的问题
+        try{
+          show = new Function('formData', 'return ' + item.show)(cache)
+        }catch(e){
+          // console.log('处理显示出错', item.key, e)
+        }
+        return show
+      })
+    }
   },
   render() {
     const that = this;
     const {
       form,
       layout,
-      formList,
-      buildFormList,
+      buildForm,
       reset,
       labelCol,
       wrapperCol,
@@ -256,7 +288,7 @@ export default {
     } = that;
 
     // 保留动态构建表单
-    const formListTmp = buildFormList ? buildFormList(formList) : formList;
+    const formListTmp = buildForm();
 
     // 事件
     const eventOn = {
@@ -276,9 +308,11 @@ export default {
         selfUpdate={selfUpdate}
         on={eventOn}
       >
+        {/* 表单列 */}
         <Row gutter={formGap}>
           {Array.isArray(formListTmp) ? formListTmp.map(renderItem) : null}
         </Row>
+        {/* 是否显示提交重置部分 */}
         {showSubmit ? (
           <Row type="flex" justify="end">
             <FormItem class="k-form-submit">

@@ -65,3 +65,17 @@ export function mergeProps(props, extend, filters = []) {
   }
   return newProps;
 }
+
+// 是否包含
+export function checkIsContain(obj, check){
+  const cache = obj || {}
+  // 字符串切割会存在字符串和数字的的问题
+  const checkValues = (typeof check.value === 'string') ? check.value.split(',') : [check.value]
+  const cacheIsArr = Array.isArray(obj[check.key])
+  const result = (
+    !cacheIsArr && checkValues.includes(cache[check.key]) ||
+    cacheIsArr && cache[check.key].includes(check.value)
+  )
+  // console.log('checkIsContain', cache, check, result)
+  return result
+}
