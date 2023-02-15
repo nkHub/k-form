@@ -25,6 +25,18 @@
         />
       </Card>
     </Space>
+    <k-form-modal
+      title="弹窗表单"
+      :visible.sync="mVisible"
+      :form-list="dynamic"
+      @submit="handleMSubmit"
+    />
+    <k-form-drawer
+      title="抽屉表单"
+      :visible.sync="dVisible"
+      :form-list="dynamic"
+      @submit="handleMSubmit"
+    />
   </div>
 </template>
 
@@ -38,7 +50,9 @@ export default {
   },
   data(){
     return {
-      normal, dynamic
+      normal, dynamic,
+      mVisible: false,
+      dVisible: false,
     }
   },
   methods: {
@@ -54,25 +68,21 @@ export default {
         }
       })
     },
-    showModalForm(){
-      this.$kform.show({
-        type: 'modal',
-        title: '弹窗表单',
-        formList: dynamic,
-        onSubmit(form){
-          console.log('form', form)
+    handleMSubmit(modal, close){
+      modal.form.validateFields((err, values) => {
+        if(err){
+          console.log('handleMSubmit error', err)
+        }else{
+          console.log('handleMSubmit', values)
+          close()
         }
       })
     },
+    showModalForm(){
+      this.mVisible = true
+    },
     showDrawerForm(){
-      this.$kform.show({
-        type: 'drawer',
-        title: '抽屉表单',
-        formList: dynamic,
-        onSubmit(form){
-          console.log('form', form)
-        }
-      })
+      this.dVisible = true
     }
   }
 }

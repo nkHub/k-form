@@ -9,34 +9,17 @@ export default {
   components: {
     Drawer
   },
-  props: mergeProps(Drawer.props, {
-    formList: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-  }, ["visible"]),
-  data(){
-    return {
-      visible: true
-    }
-  },
+  props: mergeProps(Drawer.props, KFormList.props),
   methods: {
     handleSubmit(){
       this.$emit('submit', this.$refs.form, this.handleCancel)
     },
     handleCancel(){
-      this.visible = false
-    },
-    afterChange(visible){
-      if(!visible){
-        this.$emit('close')
-      }
+      this.$emit('update:visible', false)
     }
   },
   render(){
-    const { title, formList, width, visible, handleSubmit, handleCancel, afterChange } = this
+    const { title, formList, width, visible, handleSubmit, handleCancel } = this
     return (
       <Drawer
         title={title}
@@ -44,7 +27,6 @@ export default {
         destroyOnClose={true}
         visible={visible}
         onClose={handleCancel}
-        afterVisibleChange={afterChange}
       >
         <KFormList ref="form" form-list={formList} onSubmit={handleSubmit}/>
       </Drawer>

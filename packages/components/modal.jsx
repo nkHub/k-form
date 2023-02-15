@@ -9,33 +9,14 @@ export default {
   components: {
     Modal,
   },
-  props: mergeProps(
-    Modal.props,
-    {
-      formList: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-    },
-    ["visible"]
-  ),
-  data() {
-    return {
-      visible: true,
-    };
-  },
+  props: mergeProps(Modal.props, KFormList.props),
   methods: {
     handleSubmit() {
       this.$emit("submit", this.$refs.form, this.handleCancel);
     },
     handleCancel() {
-      this.visible = false;
-    },
-    afterModalClose() {
-      this.$emit("close");
-    },
+      this.$emit('update:visible', false)
+    }
   },
   render() {
     const {
@@ -44,14 +25,12 @@ export default {
       visible,
       handleSubmit,
       handleCancel,
-      afterModalClose,
     } = this;
     return (
       <Modal
         title={title}
         destroyOnClose={true}
         visible={visible}
-        afterClose={afterModalClose}
         onOk={handleSubmit}
         onCancel={handleCancel}
       >
