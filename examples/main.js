@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import 'ant-design-vue/dist/antd.less'
-import KFormList from '../packages'
+import KFormList from '~'
 import App from './app.vue'
 
 Vue.config.productionTip = false

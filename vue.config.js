@@ -1,3 +1,4 @@
+const path = require('path')
 const isProd = process.env.NODE_ENV === 'production'
 const cdn = {
   externals: {
@@ -22,6 +23,10 @@ module.exports = {
     if (isProd) config.externals = cdn.externals
   },
   chainWebpack: (config) => {
+    config.resolve.alias
+      .set('@', path.resolve('examples'))
+      .set('~', path.resolve('packages'))
+
     if (isProd && process.env.VUE_CLI_BUILD_TARGET !== 'lib') {
       // 多入口需要设定入口
       config.plugin('html-index').tap(args => {

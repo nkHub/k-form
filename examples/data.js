@@ -301,7 +301,7 @@ export const dynamic = [
         },
       ]
     },
-    show: "formData.select === 'test1'",
+    show: "form.select === 'test1'",
     rules: {
       rules: [{ required: false, message: '请选择' }] 
     }
@@ -316,8 +316,8 @@ export const dynamic = [
       placeholder: '请选择'
     },
     rules: {
-      rules: [{ required: false, message: '请选择' }] 
+      rules: [{ required: true, message: '请选择' }] 
     },
-    show: "formData.checkbox.includes('test1')",
+    show: "form.checkbox.includes('test1')",
   },
 ]

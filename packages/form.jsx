@@ -19,9 +19,9 @@ import {
   TimePicker,
   TreeSelect,
 } from "ant-design-vue";
-import { assign, getPropsExtends, registerAuto } from "./utils/util";
-import { KUpload, KYearPicker } from "./components";
-import "./styles/index.less";
+import { assign, getPropsExtends, registerAuto } from "~/utils/util";
+import { KUpload, KYearPicker } from "~/components";
+import "~/styles/index.less";
 
 const FormItem = Form.Item;
 // 动态表单组件
@@ -146,11 +146,12 @@ export default {
       this.$set(this.items, component.name, render);
     },
     // 表单变动
-    onValuesChange(props, values) {
+    onValuesChange(_props, values) {
+      const { cache } = this
       if (values instanceof Object && Object.keys(values).length === 1) {
         this.$emit("change", values);
-        // 存储缓存
-        this.cache = { ...this.cache, ...values }
+        // 存储缓存，并清楚关联的数据
+        this.cache = { ...cache, ...values }
       }
     },
     // 获取某个字段的值
@@ -258,18 +259,30 @@ export default {
     },
     // 构建表单
     buildForm(){
+      const that = this
       const { formList, cache } = this
-      return formList.filter(item => {
+      // 处理显示
+      const list = formList.filter(item => {
         if(item.show === undefined) return true
         let show = false
         // 可能会存在报错的问题
         try{
-          show = new Function('formData', 'return ' + item.show)(cache)
+          const fn = new Function('form', 'return ' + item.show)
+          // 拦截修改
+          show = fn(new Proxy(cache, {
+            set(_target, key, value){
+              console.warn('表达式内不支持设置', key, value)
+              return false
+            }
+          }))
         }catch(e){
-          // console.log('处理显示出错', item.key, e)
+          console.debug('处理显示出错', item.key, e)
         }
+        // 不显示了自动清空缓存值
+        if(!show)that.$set(that.cache, item.key, undefined)
         return show
       })
+      return list
     }
   },
   render() {
