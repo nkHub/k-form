@@ -9,79 +9,63 @@
         </Space>
       </Card>
       <Card title="动态表单" size="small">
-        <k-form-list
-          ref="form2"
-          :form-list="dynamic"
-          @change="formChange"
-          @submit="handleSubmit('form2')"
-        />
+        <k-form-list ref="form2" :form-list="dynamic" @change="formChange" @submit="handleSubmit('form2')" />
       </Card>
       <Card title="静态表单" size="small">
-        <k-form-list
-          ref="form1"
-          :form-list="normal"
-          @change="formChange"
-          @submit="handleSubmit('form1')"
-        />
+        <k-form-list ref="form1" :form-list="normal" @change="formChange" @submit="handleSubmit('form1')" />
       </Card>
     </Space>
-    <k-form-modal
-      title="弹窗表单"
-      :visible.sync="mVisible"
-      :form-list="dynamic"
-      @submit="handleMSubmit"
-    />
-    <k-form-drawer
-      title="抽屉表单"
-      :visible.sync="dVisible"
-      :form-list="dynamic"
-      @submit="handleMSubmit"
-    />
+    <ConfigProvider :locale="locale">
+      <k-form-modal title="弹窗表单" width="500px" :visible.sync="mVisible" :form-list="dynamic" @submit="handleMSubmit" />
+    </ConfigProvider>
+    <k-form-drawer title="抽屉表单" width="500px" :visible.sync="dVisible" :form-list="dynamic" @submit="handleMSubmit" />
   </div>
 </template>
 
 <script>
-import { Card, Space, Button } from 'ant-design-vue'
+import { Card, Space, Button, ConfigProvider } from 'ant-design-vue'
+import zhCN from "ant-design-vue/es/locale/zh_CN";
 import { normal, dynamic } from './data'
 export default {
   name: 'App',
   components: {
-    Card, Space, Button
+    Card, Space, Button, ConfigProvider
   },
-  data(){
+  data() {
     return {
+      locale: zhCN,
       normal, dynamic,
       mVisible: false,
       dVisible: false,
     }
   },
   methods: {
-    formChange(){
+    formChange() {
       // console.log('formChange', e)
     },
-    handleSubmit(key){
+    handleSubmit(key) {
       this.$refs[key].validateFields((err, values) => {
-        if(err){
+        if (err) {
           console.log('handleSubmit error', err)
-        }else{
+        } else {
           console.log('handleSubmit', values)
         }
       })
     },
-    handleMSubmit(modal, close){
+    handleMSubmit(modal, close) {
       modal.form.validateFields((err, values) => {
-        if(err){
+        if (err) {
           console.log('handleMSubmit error', err)
-        }else{
+        } else {
           console.log('handleMSubmit', values)
           close()
         }
       })
     },
-    showModalForm(){
+    showModalForm() {
       this.mVisible = true
     },
-    showDrawerForm(){
+    showDrawerForm() {
       this.dVisible = true
     }
   }
@@ -89,10 +73,11 @@ export default {
 </script>
 
 <style lang="less">
-  [v-cloak]{
-    display: none;
-  }
-  .app{
-    padding: 10px 10px 30px;
-  }
+[v-cloak] {
+  display: none;
+}
+
+.app {
+  padding: 10px 10px 30px;
+}
 </style>

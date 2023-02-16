@@ -9,32 +9,35 @@ export default {
   components: {
     Modal,
   },
-  props: mergeProps(Modal.props, KFormList.props),
+  props: mergeProps(Modal.props, KFormList.props, ['destoryOnClose', 'parentContext']),
   methods: {
     handleSubmit() {
       this.$emit("submit", this.$refs.form, this.handleCancel);
     },
     handleCancel() {
-      this.$emit('update:visible', false)
-    }
+      this.$emit("update:visible", false);
+    },
   },
   render() {
-    const {
-      title,
-      formList,
-      visible,
-      handleSubmit,
-      handleCancel,
-    } = this;
+    const that = this;
+    const { handleSubmit, handleCancel } = that;
+    const modalProps = {}, formProps = {};
+    for (let k in Modal.props) {
+      modalProps[k] = that[k];
+    }
+    for (let k in KFormList.props) {
+      formProps[k] = that[k];
+    }
+    modalProps.parentContext = that;
+    modalProps.destoryOnClose = true
+    formProps.showSubmit = false;
     return (
       <Modal
-        title={title}
-        destroyOnClose={true}
-        visible={visible}
+        {...{ props: modalProps }}
         onOk={handleSubmit}
         onCancel={handleCancel}
       >
-        <KFormList ref="form" form-list={formList} show-submit={false} />
+        <KFormList ref="form" {...{ props: formProps }} />
       </Modal>
     );
   },
