@@ -20,7 +20,7 @@ import {
   TreeSelect,
 } from "ant-design-vue";
 import { assign, getPropsExtends, registerAuto } from "~/utils/util";
-import { KUpload, KYearPicker } from "~/components";
+import { KUpload, KYearPicker, KSelect } from "~/components";
 import "~/styles/index.less";
 
 const FormItem = Form.Item;
@@ -99,10 +99,11 @@ export default {
       Rate,
       TimePicker,
       DatePicker,
+      KSelect,
       TreeSelect,
       Cascader,
       KUpload,
-      KYearPicker,
+      KYearPicker
     ];
     registerAuto(this.register, ...list);
   },
@@ -154,6 +155,9 @@ export default {
         this.cache = { ...cache, ...values }
       }
     },
+    /**
+     * 外部方法部分
+    */
     // 获取某个字段的值
     getFieldValue(key) {
       return this.form.getFieldValue(key);
@@ -165,10 +169,16 @@ export default {
     // 重置表单
     reset() {
       this.form.resetFields();
+      // 需要重置缓存
+      this.cache = {}
+      this.recursive(this.formList)
     },
     validateFields(callback) {
       this.form.validateFields(callback);
     },
+    /**
+     * 渲染部分
+    */
     // 渲染表单项基础猎狗
     renderFormItemBase(item, content) {
       const { labelCol, wrapperCol } = this;

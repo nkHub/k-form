@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { Modal } from "ant-design-vue";
-import { mergeProps } from "~/utils/util";
+import { mergeDefaultProps, getPropsData } from "~/utils/util";
 import KFormList from "~/form";
 
 Vue.use(Modal);
@@ -9,7 +9,7 @@ export default {
   components: {
     Modal,
   },
-  props: mergeProps(Modal.props, KFormList.props, ['destoryOnClose', 'parentContext']),
+  props: mergeDefaultProps(Modal.props, KFormList.props, ['destoryOnClose', 'parentContext']),
   methods: {
     handleSubmit() {
       this.$emit("submit", this.$refs.form, this.handleCancel);
@@ -21,16 +21,13 @@ export default {
   render() {
     const that = this;
     const { handleSubmit, handleCancel } = that;
-    const modalProps = {}, formProps = {};
-    for (let k in Modal.props) {
-      modalProps[k] = that[k];
-    }
-    for (let k in KFormList.props) {
-      formProps[k] = that[k];
-    }
-    modalProps.parentContext = that;
-    modalProps.destoryOnClose = true
-    formProps.showSubmit = false;
+    const modalProps = getPropsData(Modal.props, that, {
+      parentContext: that,
+      destoryOnClose: true
+    });
+    const formProps = getPropsData(KFormList.props, that, {
+      showSubmit: false
+    });
     return (
       <Modal
         {...{ props: modalProps }}

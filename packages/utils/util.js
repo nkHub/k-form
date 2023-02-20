@@ -53,7 +53,7 @@ export function file2blob(file) {
 }
 
 // 合并props
-export function mergeProps(props, extend, filters = []) {
+export function mergeDefaultProps(props, extend, filters = []) {
   if (Array.isArray(filters) && filters.length === 0) {
     return Object.assign({}, props, extend)
   }
@@ -64,4 +64,13 @@ export function mergeProps(props, extend, filters = []) {
     }
   }
   return newProps;
+}
+
+// 通过props生成参数
+export function getPropsData(props, instance, defaultVal){
+  const propsObj = {};
+  for (let k in props) {
+    propsObj[k] = instance[k];
+  }
+  return Object.assign({}, propsObj, defaultVal)
 }

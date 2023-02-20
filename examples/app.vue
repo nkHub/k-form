@@ -1,18 +1,21 @@
 <template>
   <div class="app">
+    <h1>KForm</h1>
     <Space direction="vertical">
-      <h1>KForm</h1>
+      <Card title="静态表单" size="small">
+        <k-form-list ref="form1" :form-list="normal" @change="formChange" @submit="handleSubmit('form1')" />
+      </Card>
+      <Card title="动态表单" size="small">
+        <k-form-list ref="form2" :form-list="dynamic" @change="formChange" @submit="handleSubmit('form2')" />
+      </Card>
       <Card title="弹窗抽屉表单" size="small">
         <Space>
           <Button type="primary" @click="showModalForm">弹窗</Button>
           <Button type="primary" @click="showDrawerForm">抽屉</Button>
         </Space>
       </Card>
-      <Card title="动态表单" size="small">
-        <k-form-list ref="form2" :form-list="dynamic" @change="formChange" @submit="handleSubmit('form2')" />
-      </Card>
-      <Card title="静态表单" size="small">
-        <k-form-list ref="form1" :form-list="normal" @change="formChange" @submit="handleSubmit('form1')" />
+      <Card title="虚拟列表下拉选择" size="small">
+        <k-form-list ref="form3" :form-list="virtual" @change="formChange" @submit="handleSubmit('form3')" />
       </Card>
     </Space>
     <ConfigProvider :locale="locale">
@@ -25,7 +28,7 @@
 <script>
 import { Card, Space, Button, ConfigProvider } from 'ant-design-vue'
 import zhCN from "ant-design-vue/es/locale/zh_CN";
-import { normal, dynamic } from './data'
+import { normal, dynamic, virtual } from './data'
 export default {
   name: 'App',
   components: {
@@ -34,7 +37,7 @@ export default {
   data() {
     return {
       locale: zhCN,
-      normal, dynamic,
+      normal, dynamic, virtual,
       mVisible: false,
       dVisible: false,
     }
@@ -79,5 +82,11 @@ export default {
 
 .app {
   padding: 10px 10px 30px;
+  h1{
+    margin: 0;
+  }
+  .ant-space-vertical{
+    flex-direction: column-reverse;
+  }
 }
 </style>

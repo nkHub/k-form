@@ -2,14 +2,17 @@ const path = require('path')
 const isProd = process.env.NODE_ENV === 'production'
 const cdn = {
   externals: {
-    "ant-design-vue": 'ant',
     "vue": 'Vue',
+    "ant-design-vue": 'ant',
   },
   js: [
+    'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js',
     'https://cdnjs.cloudflare.com/ajax/libs/ant-design-vue/1.7.8/antd.min.js',
-    'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'
+    'https://cdn.jsdelivr.net/npm/vue-virtual-scroller@1.1.2/dist/vue-virtual-scroller.umd.min.js'
   ],
-  css: []
+  css: [
+    'https://cdn.jsdelivr.net/npm/vue-virtual-scroller@1.1.2/dist/vue-virtual-scroller.min.css'
+  ]
 }
 module.exports = {
   devServer: {

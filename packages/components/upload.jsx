@@ -1,5 +1,5 @@
 import { Upload, Button, Icon } from "ant-design-vue";
-import { file2blob, mergeProps } from "../utils/util";
+import { file2blob, mergeDefaultProps } from "~/utils/util";
 
 export default {
   name: "KUpload",
@@ -7,7 +7,7 @@ export default {
     prop: "fileList",
     event: "change",
   },
-  props: mergeProps(
+  props: mergeDefaultProps(
     Upload.props,
     {
       message: {

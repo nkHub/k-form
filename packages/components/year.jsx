@@ -1,5 +1,5 @@
 import { DatePicker } from "ant-design-vue";
-import { mergeProps } from "../utils/util";
+import { mergeDefaultProps } from "~/utils/util";
 
 export default {
   name: "KYearPicker",
@@ -7,7 +7,7 @@ export default {
     prop: "value",
     event: "panelChange",
   },
-  props: mergeProps(DatePicker.props, {}, ["open", "mode"]),
+  props: mergeDefaultProps(DatePicker.props, {}, ["open", "mode"]),
   data() {
     return {
       isOpen: false,

@@ -321,3 +321,28 @@ export const dynamic = [
     show: "form.checkbox.includes('test1')",
   },
 ]
+
+// 测试数据
+const arr = []
+for(let i = 0; i < 1000; i ++){
+  arr.push({
+    label: `测试${i}`,
+    value: `test${i}`
+  })
+}
+
+export const virtual = [
+  {
+    type: 'KSelect',
+    name: '选择',
+    key: 'k-select',
+    props: {
+      mode: 'multiple',
+      placeholder: '请选择',
+      options: arr
+    },
+    rules: {
+      rules: [{ required: false, message: '请选择' }] 
+    }
+  },
+]
