@@ -15,8 +15,18 @@
         </Space>
       </Card>
       <Card title="虚拟列表下拉选择" size="small">
+        <Card size="small" :bordered="false">
+          <Space>
+            单独使用：
+            <k-select style="width: 180px" :options="options" placeholder="请选择"/>
+          </Space>
+        </Card>
         <k-form-list ref="form3" :form-list="virtual" @change="formChange" @submit="handleSubmit('form3')" />
       </Card>
+      <!-- <Card title="Canvas表格" size="small">
+        <k-table/>
+      </Card> -->
+      <div></div>
     </Space>
     <ConfigProvider :locale="locale">
       <k-form-modal title="弹窗表单" width="500px" :visible.sync="mVisible" :form-list="dynamic" @submit="handleMSubmit" />
@@ -28,7 +38,7 @@
 <script>
 import { Card, Space, Button, ConfigProvider } from 'ant-design-vue'
 import zhCN from "ant-design-vue/es/locale/zh_CN";
-import { normal, dynamic, virtual } from './data'
+import { normal, dynamic, virtual, options } from './data'
 export default {
   name: 'App',
   components: {
@@ -40,6 +50,7 @@ export default {
       normal, dynamic, virtual,
       mVisible: false,
       dVisible: false,
+      options
     }
   },
   methods: {

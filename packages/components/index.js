@@ -3,8 +3,9 @@ import KSelect from './select'
 import KYearPicker from './year'
 import KFormModal from './modal'
 import KFormDrawer from './drawer'
+import KTable from './table'
 
-export { KUpload, KSelect, KYearPicker, KFormModal, KFormDrawer }
+export { KUpload, KSelect, KYearPicker, KFormModal, KFormDrawer, KTable }
 
 // demo createElement
 // h('div', {

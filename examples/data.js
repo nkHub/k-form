@@ -331,6 +331,7 @@ for(let i = 0; i < 1000; i ++){
   })
 }
 
+export const options = arr
 export const virtual = [
   {
     type: 'KSelect',
