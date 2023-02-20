@@ -347,3 +347,85 @@ export const virtual = [
     }
   },
 ]
+
+const source = []
+for(let i = 0; i < 1000; i ++){
+  source.push({
+    sex: '男',
+    name: '胡彦斌',
+    age: 32,
+    address: '西湖区湖底公园1号',
+  })
+}
+
+export const data = source
+export const columns = [
+  {
+    label: '序号',
+    key: '$$index',
+    type: 'index',
+    width: 60,
+    fixed: 'left',
+    align: 'center'
+  },
+  {
+    label: '名字',
+    key: 'name',
+    queryField: 'name',
+    queryComponent: 'query-checkbox',
+    queryAttrs: {
+      list: [
+        { value: '1', label: '选项1' },
+        { value: '2', label: '选项2' },
+        { value: '3', label: '选项3' },
+      ]
+    },
+    fixed: 'left',
+    width: 100,
+  },
+  {
+    label: '年龄',
+    key: 'age',
+    width: 70,
+    sortable: true,
+  },
+  {
+    label: '地址',
+    key: 'address',
+    width: 180
+  },
+  {
+    label: '名字2',
+    key: 'name2',
+    width: 120,
+  },
+  {
+    label: '年龄2',
+    key: 'age2',
+    width: 120,
+    sortable: true,
+  },
+  {
+    label: '地址2',
+    key: 'address2',
+    width: 120
+  },
+  {
+    label: '名字3',
+    key: 'name3',
+    width: 120,
+    sortable: true,
+  },
+  {
+    label: '年龄3',
+    key: 'age3',
+    width: 120,
+    sortable: true,
+  },
+  {
+    label: '地址3',
+    key: 'address3',
+    fixed: 'right',
+    width: 120
+  },
+]

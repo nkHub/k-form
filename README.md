@@ -4,4 +4,4 @@
 
 #### 参考列表
  * 虚拟列表[antd-virtual-select](https://github.com/iblq/antd-virtual-select)
- * canvas表格[kt-canvas-table](https://github.com/gushichang/kt-canvas-table)
+ * canvas表格[k-table](https://github.com/gushichang/k-table)

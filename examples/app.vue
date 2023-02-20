@@ -24,10 +24,11 @@
         <k-form-list ref="form3" :form-list="virtual" @change="formChange" @submit="handleSubmit('form3')" />
       </Card>
       <Card title="Canvas表格" size="small">
-        <k-table/>
+        <k-table :data="data" :columns="columns" :max-height="300"/>
       </Card>
       <div></div>
     </Space>
+    <!-- 弹窗 -->
     <ConfigProvider :locale="locale">
       <k-form-modal title="弹窗表单" width="500px" :visible.sync="mVisible" :form-list="dynamic" @submit="handleMSubmit" />
     </ConfigProvider>
@@ -38,7 +39,7 @@
 <script>
 import { Card, Space, Button, ConfigProvider } from 'ant-design-vue'
 import zhCN from "ant-design-vue/es/locale/zh_CN";
-import { normal, dynamic, virtual, options } from './data'
+import { normal, dynamic, virtual, options, data, columns } from './data'
 export default {
   name: 'App',
   components: {
@@ -50,7 +51,8 @@ export default {
       normal, dynamic, virtual,
       mVisible: false,
       dVisible: false,
-      options
+      options,
+      data, columns
     }
   },
   methods: {

@@ -1,6 +1,185 @@
-.k-table{
-  canvas{
-    display: block;
-    width: 100%;
-  }
+@import url(./iconfont/iconfont.css);
+.k-table-box {
+	line-height: 0;
+	animation: toOpacity 0.1s;
+}
+
+@keyframes toOpacity {
+	from {
+		opacity: 0.98;
+	}
+	to {
+		opacity: 1;
+	}
+}
+.k-table {
+	position: relative;
+	display: inline-block;
+}
+.k-table * {
+	box-sizing: border-box;
+}
+.k-table-operate-board {
+	line-height: 1.4;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+.k-table-scrolly-box {
+	z-index: 10;
+	position: absolute;
+	right: 0;
+	top: var(--header-height);
+	height: 100%;
+	width: var(--bar-width);
+}
+.k-table-scrolly-bar {
+	background: rgba(0, 0, 0, 0.1);
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(100% - 4px);
+	position: absolute;
+	border-radius: 100px;
+	transition: background, width 0.15s;
+	cursor: pointer;
+}
+.k-table .moving.k-table-scrolly-bar,
+.k-table-scrolly-bar:hover {
+	background: rgba(0, 0, 0, 0.35);
+	width: calc(100% - 2px);
+}
+.k-table-scrollx-box {
+	position: absolute;
+	background: var(--background);
+	height: var(--bar-width);
+	border-top: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--border-color);
+	width: 100%;
+	bottom: 0;
+	z-index: 10;
+}
+.k-table_border .k-table-scrollx-box {
+	border: 1px solid var(--border-color);
+}
+.k-table-scrollx-bar {
+	height: calc(100% - 2px);
+	background: rgba(0, 0, 0, 0.1);
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	border-radius: 100px;
+	transition: background, height 0.15s;
+	cursor: pointer;
+}
+.k-table .moving.k-table-scrollx-bar,
+.k-table-scrollx-bar:hover {
+	background: rgba(0, 0, 0, 0.35);
+	height: 100%;
+}
+.k-table-slot-wrap {
+	float: left;
+	position: relative;
+}
+.k-table-slot {
+	position: absolute;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+}
+.k-table-col-resize-handler {
+	position: absolute;
+	cursor: col-resize;
+	background: var(--primary);
+}
+.k-table-col-resize-line {
+	position: absolute;
+	height: 100%;
+	background: #ccc;
+	z-index: 9;
+	top: 0;
+	width: 1px;
+}
+.k-table-tooltip {
+	z-index: 9999;
+	position: fixed;
+	color: #666;
+	pointer-events: none;
+	display: inline-block;
+	background: #ffffff;
+	padding: 5px 10px;
+	font-size: 12px;
+	border-radius: 4px;
+	box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014,
+		0 9px 28px 8px #0000000d;
+}
+.k-table-tooltip.popover {
+	pointer-events: initial;
+}
+.k-table-tooltip-arrow,
+.k-table-tooltip-arrow::before {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background: inherit;
+}
+.k-table-tooltip-arrow {
+	visibility: hidden;
+}
+.k-table-tooltip-arrow::before {
+	visibility: visible;
+	content: "";
+	transform: rotate(45deg);
+}
+.k-table-tooltip[data-popper-placement^="top"]
+	> .k-table-tooltip-arrow {
+	bottom: -4px;
+}
+.k-table-tooltip[data-popper-placement^="bottom"]
+	> .k-table-tooltip-arrow {
+	top: -4px;
+}
+.k-table-tooltip[data-popper-placement^="left"]
+	> .k-table-tooltip-arrow {
+	right: -4px;
+}
+.k-table-tooltip[data-popper-placement^="right"]
+	> .k-table-tooltip-arrow {
+	left: -4px;
+}
+.k-table-select-row{
+	padding: 4px;
+	display: block;
+}
+.k-table-select-row.el-radio,
+.k-table-select-row.el-checkbox {
+	display: block;
+	width: 100%;
+	padding: 5px 0px;
+}
+.k-table-select-footer {
+	display: flex;
+	padding-top: 5px;
+}
+.k-table-select-footer .el-button {
+	padding-top: 0;
+	padding-bottom: 0;
+	height: 28px;
+}
+.k-table-select-footer .el-button--primary {
+	padding: 0 8px;
+}
+.k-table-select-input {
+	position: absolute;
+	background: transparent;
+	border: none;
+	padding: 0 8px;
+	outline: none;
+	background: #fff;
+}
+
+
+.k-table-select .ant-checkbox-wrapper + .ant-checkbox-wrapper{
+	margin-left: 0;
 }
