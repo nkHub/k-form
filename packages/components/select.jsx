@@ -162,7 +162,13 @@ export default {
       mouseleave: (e) => that.$emit("mouseleave", e),
       dropdownVisibleChange: (e) => that.$emit("dropdownVisibleChange", e),
       search: (e) => that.$emit("search", e),
-      select: (e) => that.$emit("select", e),
+      select: (e) => {
+        that.$emit("select", e)
+        // 未知原因导致单选隐藏失效
+        if(!['multiple','tag'].includes(props.mode)){
+          that.$refs.select.blur()
+        }
+      },
     };
     return <Select ref="select" {...{ props, on }}></Select>;
   },

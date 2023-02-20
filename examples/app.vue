@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h1>KForm</h1>
+    <h1>K-Form</h1>
     <Space direction="vertical">
       <Card title="静态表单" size="small">
         <k-form-list ref="form1" :form-list="normal" @change="formChange" @submit="handleSubmit('form1')" />
@@ -23,9 +23,9 @@
         </Card>
         <k-form-list ref="form3" :form-list="virtual" @change="formChange" @submit="handleSubmit('form3')" />
       </Card>
-      <!-- <Card title="Canvas表格" size="small">
+      <Card title="Canvas表格" size="small">
         <k-table/>
-      </Card> -->
+      </Card>
       <div></div>
     </Space>
     <ConfigProvider :locale="locale">
