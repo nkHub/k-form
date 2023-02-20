@@ -1,8 +1,4 @@
 @import url(./iconfont/iconfont.css);
-.k-table-box {
-	line-height: 0;
-	animation: toOpacity 0.1s;
-}
 
 @keyframes toOpacity {
 	from {
@@ -12,54 +8,63 @@
 		opacity: 1;
 	}
 }
-.k-table {
-	position: relative;
-	display: inline-block;
+
+.k-table-box {
+	line-height: 0;
+	animation: toOpacity 0.1s;
+	.k-table {
+		position: relative;
+		display: inline-block;
+		& * {
+			box-sizing: border-box;
+		}
+	}
+
+	.k-table-operate-board {
+		line-height: 1.4;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+
+	.k-table-scrolly-box {
+		z-index: 10;
+		position: absolute;
+		right: 0;
+		top: var(--header-height);
+		height: 100%;
+		width: var(--bar-width);
+	}
+	.k-table-scrolly-bar {
+		background: rgba(0, 0, 0, 0.1);
+		left: 50%;
+		transform: translateX(-50%);
+		width: calc(100% - 4px);
+		position: absolute;
+		border-radius: 100px;
+		transition: background, width 0.15s;
+		cursor: pointer;
+		&.moving,
+		&:hover{
+			background: rgba(0, 0, 0, 0.35);
+			width: calc(100% - 2px);
+		}
+	}
+	.k-table-scrollx-box {
+		position: absolute;
+		background: var(--background);
+		height: var(--bar-width);
+		border-top: 1px solid var(--border-color);
+		border-bottom: 1px solid var(--border-color);
+		width: 100%;
+		bottom: 0;
+		z-index: 10;
+	}
+
 }
-.k-table * {
-	box-sizing: border-box;
-}
-.k-table-operate-board {
-	line-height: 1.4;
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-}
-.k-table-scrolly-box {
-	z-index: 10;
-	position: absolute;
-	right: 0;
-	top: var(--header-height);
-	height: 100%;
-	width: var(--bar-width);
-}
-.k-table-scrolly-bar {
-	background: rgba(0, 0, 0, 0.1);
-	left: 50%;
-	transform: translateX(-50%);
-	width: calc(100% - 4px);
-	position: absolute;
-	border-radius: 100px;
-	transition: background, width 0.15s;
-	cursor: pointer;
-}
-.k-table .moving.k-table-scrolly-bar,
-.k-table-scrolly-bar:hover {
-	background: rgba(0, 0, 0, 0.35);
-	width: calc(100% - 2px);
-}
-.k-table-scrollx-box {
-	position: absolute;
-	background: var(--background);
-	height: var(--bar-width);
-	border-top: 1px solid var(--border-color);
-	border-bottom: 1px solid var(--border-color);
-	width: 100%;
-	bottom: 0;
-	z-index: 10;
-}
+
 .k-table_border .k-table-scrollx-box {
 	border: 1px solid var(--border-color);
 }
