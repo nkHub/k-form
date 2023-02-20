@@ -366,7 +366,8 @@ export const columns = [
     type: 'index',
     width: 60,
     fixed: 'left',
-    align: 'center'
+    align: 'center',
+    colResize: false
   },
   {
     label: '名字',
@@ -382,50 +383,59 @@ export const columns = [
     },
     fixed: 'left',
     width: 100,
+    colResize: false
   },
   {
     label: '年龄',
     key: 'age',
     width: 70,
     sortable: true,
+    colResize: false
   },
   {
     label: '地址',
     key: 'address',
-    width: 180
+    width: 180,
+    colResize: false
   },
   {
     label: '名字2',
     key: 'name2',
     width: 120,
+    colResize: false
   },
   {
     label: '年龄2',
     key: 'age2',
     width: 120,
     sortable: true,
+    colResize: false
   },
   {
     label: '地址2',
     key: 'address2',
-    width: 120
+    width: 120,
+    colResize: false
   },
   {
     label: '名字3',
     key: 'name3',
     width: 120,
     sortable: true,
+    colResize: false
   },
   {
     label: '年龄3',
     key: 'age3',
     width: 120,
     sortable: true,
+    colResize: false
   },
   {
     label: '地址3',
     key: 'address3',
     fixed: 'right',
-    width: 120
+    width: 120,
+    colResize: false
   },
 ]

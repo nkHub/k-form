@@ -80,15 +80,14 @@ export default {
     // 列表渲染
     renderList(nodes, startIndex, endIndex) {
       const that = this;
-      const { ITEM_HEIGHT, buffer } = this;
+      const { ITEM_HEIGHT } = this;
       const { propsData: props } = nodes.componentOptions;
-      const isPos = endIndex > buffer * 2;
       const menuItems = props.menuItems
         .slice(startIndex, endIndex)
         .map((v, i) => {
           const index = (startIndex || 0) + Number(i);
           v.data.style = Object.assign({}, v.data.style, {
-            position: isPos ? "absolute" : "static",
+            position: "absolute",
             top: ITEM_HEIGHT * index + "px",
             height: ITEM_HEIGHT + "px",
             width: "100%",
