@@ -24,7 +24,7 @@
         <k-form-list ref="form3" :form-list="virtual" @change="formChange" @submit="handleSubmit('form3')" />
       </Card>
       <Card title="Canvas表格" size="small">
-        <k-table :data="data" :columns="columns" :max-height="300"/>
+        <k-table :data-source="data" :columns="columns" :max-height="300"/>
       </Card>
       <div></div>
     </Space>

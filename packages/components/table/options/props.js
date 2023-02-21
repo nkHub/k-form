@@ -3,7 +3,7 @@
  * props
  */
 export default {
-  data: { // 自动排序需加上 .sync
+  dataSource: { // 自动排序需加上 .sync
     type: Array,
     default: () => []
   },

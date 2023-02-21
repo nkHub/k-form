@@ -1,7 +1,7 @@
 <template>
   <div class="k-table-select">
     <div>
-      <RadioGroup :value="value" @change="$emit('input', $event)">
+      <RadioGroup :value="value" @input="$emit('input', $event)">
         <Radio v-for="(item, index) in list" :key="index" v-on="item" :label="item.value" class="k-table-select-row">{{
           item.label }}</Radio>
       </RadioGroup>

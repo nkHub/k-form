@@ -351,6 +351,7 @@ export const virtual = [
 const source = []
 for(let i = 0; i < 1000; i ++){
   source.push({
+    key: i,
     sex: '男',
     name: '胡彦斌',
     age: 32,
@@ -360,6 +361,13 @@ for(let i = 0; i < 1000; i ++){
 
 export const data = source
 export const columns = [
+  {
+    key: '$$selection',
+    type: 'selection',
+    fixed: 'left',
+    width: 36,
+    colResize: false
+  },
   {
     label: '序号',
     key: '$$index',

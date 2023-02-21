@@ -35,7 +35,7 @@ export default {
       (this.maxScrollWidth > 0 ? (this.barWidth || 10) : 0)
   },
   contentHeight() {
-    return this.rowHeight * (this.data.length || 1)
+    return this.rowHeight * (this.dataSource.length || 1)
   },
   maxScrollHeight() {
     const diff = this.contentHeight - this.maxContentHeight
@@ -87,9 +87,9 @@ export default {
   allChecked() {
     let l = 0
     if (!this.disabledSelection) {
-      l = this.data.length
+      l = this.dataSource.length
     } else {
-      l = this.data.filter((v, i) => !this.disabledSelection(v, i))
+      l = this.dataSource.filter((v, i) => !this.disabledSelection(v, i))
     }
     return l > 0 && this.currentSelection.length === l
   }

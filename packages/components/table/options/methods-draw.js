@@ -181,10 +181,10 @@ export default {
     const list = this.bodyColumnsByFixed[fixed]
     let index = parseInt(this.scrollY / this.rowHeight)
     let endIndex = index + parseInt(this.bodyHeight / this.rowHeight) + 2
-    endIndex = Math.min(endIndex, this.data.length)
+    endIndex = Math.min(endIndex, this.dataSource.length)
 
     while (index < endIndex) {
-      const row = this.data[index]
+      const row = this.dataSource[index]
       const _top = this.headerHeight + index * this.rowHeight - this.scrollY
       this.drawBackground(this.fixedPlateInfo[fixed].x, _top - 0.5,
         this.fixedPlateInfo[fixed].width,
@@ -311,7 +311,7 @@ export default {
     }
   },
   drawNoData() {
-    if (!this.data || this.data.length === 0) {
+    if (!this.dataSource || this.dataSource.length === 0) {
       this.drawCellText({
         x: 0,
         y: this.headerHeight,

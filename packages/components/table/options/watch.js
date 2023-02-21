@@ -23,7 +23,7 @@ export default {
   },
   data(val) {
     if (this.autoSort && val !== this.currentData) {
-      this.currentData = listSort(this.data, this.currentData.field, this.currentData.orderByMode, this.currentData.sortType)
+      this.currentData = listSort(this.dataSource, this.currentData.field, this.currentData.orderByMode, this.currentData.sortType)
       this.$emit('update:data', this.currentData)
     }
     this.redraw()
@@ -55,7 +55,7 @@ export default {
   currentOrder: {
     handler(val) {
       if (this.autoSort) {
-        this.currentData = listSort(this.data, val.field, val.orderByMode, val.sortType)
+        this.currentData = listSort(this.dataSource, val.field, val.orderByMode, val.sortType)
         this.$emit('update:data', this.currentData)
       }
     },

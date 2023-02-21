@@ -149,11 +149,11 @@ export default {
       value: val,
     };
     const on = {
-      change: (e) => {
-        that.val = e;
-        that.$emit("change", e);
+      change: (value, option) => {
+        that.val = value;
+        that.$emit("change", value, option);
       },
-      deselect: (e) => that.$emit("deselect", e),
+      deselect: (...e) => that.$emit("deselect", ...e),
       blur: (e) => that.$emit("blur", e),
       focus: (e) => that.$emit("focus", e),
       inputKeydown: (e) => that.$emit("inputKeydown", e),
@@ -161,8 +161,8 @@ export default {
       mouseleave: (e) => that.$emit("mouseleave", e),
       dropdownVisibleChange: (e) => that.$emit("dropdownVisibleChange", e),
       search: (e) => that.$emit("search", e),
-      select: (e) => {
-        that.$emit("select", e)
+      select: (value, option) => {
+        that.$emit("select", value, option)
         // 未知原因导致单选隐藏失效
         if(!['multiple','tag'].includes(props.mode)){
           that.$refs.select.blur()

@@ -411,7 +411,7 @@ export default {
   displayRowCount() {
     let index = parseInt(this.scrollY / this.rowHeight)
     let endIndex = index + parseInt(this.bodyHeight / this.rowHeight) + 2
-    endIndex = Math.min(endIndex, this.data.length)
+    endIndex = Math.min(endIndex, this.dataSource.length)
     return endIndex - index
   },
   currentIndex(n) {
