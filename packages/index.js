@@ -1,4 +1,4 @@
-import { KUpload, KYearPicker, KSelect, KFormModal, KFormDrawer, KTable } from './components'
+import { KUpload, KYearPicker, KSelect, KFormModal, KFormDrawer } from './components'
 import FormList from './form'
 // 版本
 const version = '1.0.0'
@@ -13,7 +13,6 @@ const install = function (Vue) {
   Vue.component(KYearPicker.name, KYearPicker)
   Vue.component(KFormModal.name, KFormModal)
   Vue.component(KFormDrawer.name, KFormDrawer)
-  Vue.component(KTable.name, KTable)
 }
 
 if (typeof window !== "undefined" && window.Vue) {
