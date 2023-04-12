@@ -22,7 +22,6 @@
     "less": "3.9.0",
     "less-loader": "4.1.0",
     "vue": "2.6.10",
-    "vue-grid-layout": "^2.4.0",
     "webpack-bundle-analyzer": "^4.7.0"
   },
   "devDependencies": {
