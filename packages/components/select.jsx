@@ -51,7 +51,8 @@ export default {
       return this.options;
     },
     enable() {
-      return this.optionList.length > 200;
+      const isArr = Array.isArray(this.optionList)
+      return isArr && this.optionList.length > 200;
     },
   },
   methods: {
@@ -122,7 +123,7 @@ export default {
       dropdownMenuStyle,
     } = this;
     const { startIndex, endIndex } = this.getStartAndEndIndex();
-    const height = optionList.length * ITEM_HEIGHT || 100;
+    const height = (optionList && optionList.length) * ITEM_HEIGHT || 100;
     const recycleProps = enable
       ? {
           dropdownRender(nodes) {

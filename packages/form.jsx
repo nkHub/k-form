@@ -4,26 +4,16 @@ import {
   Tooltip,
   Row,
   Col,
-  Input,
-  InputNumber,
-  Select,
   Button,
-  Space,
-  Checkbox,
-  Radio,
-  Switch,
-  Slider,
-  Rate,
-  Cascader,
-  DatePicker,
-  TimePicker,
-  TreeSelect,
+  Space
 } from "ant-design-vue";
 import { assign, getPropsExtends, registerAuto } from "~/utils/util";
-import { KUpload, KYearPicker, KSelect } from "~/components";
+import components from "./utils/components"
 import "~/styles/index.less";
 
 const FormItem = Form.Item;
+// 自动加载内置的组件
+
 // 动态表单组件
 export default {
   name: "k-form-list",
@@ -58,7 +48,7 @@ export default {
     // 表单项布局间隔
     formGap: {
       type: Number,
-      default: 16,
+      default: 10,
     },
     // 是否自更新
     selfUpdate: {
@@ -86,26 +76,7 @@ export default {
     };
   },
   created() {
-    // 自动加载内置的组件
-    const list = [
-      Input,
-      InputNumber,
-      Select,
-      Input.TextArea,
-      Checkbox.Group,
-      Radio.Group,
-      Switch,
-      Slider,
-      Rate,
-      TimePicker,
-      DatePicker,
-      KSelect,
-      TreeSelect,
-      Cascader,
-      KUpload,
-      KYearPicker
-    ];
-    registerAuto(this.register, ...list);
+    registerAuto(this.register, ...components);
   },
   watch:{
     formList:{
@@ -179,7 +150,7 @@ export default {
     /**
      * 渲染部分
     */
-    // 渲染表单项基础猎狗
+    // 渲染表单项基础
     renderFormItemBase(item, content) {
       const { labelCol, wrapperCol } = this;
       // 不显示返回的表单类型(会和清除icon冲突)
@@ -196,9 +167,10 @@ export default {
           help={item.help}
         >
           <span slot="label">
-            <span>{item.name}</span>
+            <span>{item.label}</span>
             {item.tips ? (
               <Tooltip>
+                &nbsp;
                 <Icon style={tipsIconStyle} type="question-circle" />
                 <div slot="title" domPropsInnerHTML={item.tips}></div>
               </Tooltip>
@@ -212,23 +184,23 @@ export default {
     // 渲染单个表单
     renderItem(item) {
       const { layoutCol, renderFormItemBase, items: formItems } = this;
+      const { customOutterRender } = item;
       const className = {
         hide: item.hide,
       };
       // 渲染通用表单部分
       const renderFormItem = (item) => {
         const h = this.$createElement;
-        const content =
-          formItems[item.type] && formItems[item.type](item, h, this);
+        const content = formItems[item.type] && formItems[item.type](item, h, this);
+        // 自动渲染
         return renderFormItemBase(item, content);
       };
       // 渲染自定义表单部分
       const renderManual = (item) => {
         const { customRender } = item;
-        return renderFormItemBase(
-          item,
-          typeof customRender === "function" && customRender(item)
-        );
+        const isFunc = typeof customRender === "function"
+        // 默认只渲染表单部分
+        return renderFormItemBase(item, isFunc && customRender(item));
       };
       // 切换渲染器
       const switchRender = (item) => {
@@ -242,12 +214,17 @@ export default {
         }
         return row;
       };
+      const props = {
+        key: item.key,
+        span: item.layoutCol || layoutCol,
+        class: className
+      }
+      // 外部渲染(需要嵌套功能)
+      if(typeof customOutterRender === "function"){
+        return customOutterRender(item, props, switchRender)
+      }
       return (
-        <Col
-          key={item.key}
-          span={item.layoutCol || layoutCol}
-          class={className}
-        >
+        <Col { ...{ props } }>
           {switchRender(item)}
         </Col>
       );
@@ -336,7 +313,7 @@ export default {
           {Array.isArray(formListTmp) ? formListTmp.map(renderItem) : null}
         </Row>
         {/* 是否显示提交重置部分 */}
-        {showSubmit ? (
+        {showSubmit && formListTmp.length > 0 ? (
           <Row type="flex" justify="end">
             <FormItem class="k-form-submit">
               <Space>

@@ -1,10 +1,11 @@
 import KUpload from './upload'
 import KSelect from './select'
 import KYearPicker from './year'
+import KEditor from './editor'
 import KFormModal from './modal'
 import KFormDrawer from './drawer'
 
-export { KUpload, KSelect, KYearPicker, KFormModal, KFormDrawer }
+export { KUpload, KSelect, KYearPicker, KEditor, KFormModal, KFormDrawer }
 
 // demo createElement
 // h('div', {

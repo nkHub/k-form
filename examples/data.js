@@ -2,7 +2,7 @@
 export const normal = [
   {
     type: 'AInput',
-    name: '名称',
+    label: '名称',
     key: 'hide',
     hide: true,
     rules: {
@@ -11,7 +11,7 @@ export const normal = [
   },
   {
     type: 'AInput',
-    name: '名称',
+    label: '名称',
     key: 'input',
     props: {
       placeholder: '请输入名称',
@@ -23,7 +23,7 @@ export const normal = [
   },
   {
     type: 'AInputNumber',
-    name: '数量',
+    label: '数量',
     key: 'number',
     style: {
       width: '100%'
@@ -37,7 +37,7 @@ export const normal = [
   },
   {
     type: 'ASelect',
-    name: '选择',
+    label: '选择',
     key: 'select',
     props: {
       placeholder: '请选择',
@@ -58,7 +58,7 @@ export const normal = [
   },
   {
     type: 'ASwitch',
-    name: '开关',
+    label: '开关',
     key: 'switch',
     rules: {
       rules: [{ required: false, message: '请选择' }] 
@@ -66,7 +66,7 @@ export const normal = [
   },
   {
     type: 'ARadioGroup',
-    name: '单选框',
+    label: '单选框',
     key: 'radiobox',
     props: {
       options: [
@@ -86,7 +86,7 @@ export const normal = [
   },
   {
     type: 'ACheckboxGroup',
-    name: '复选框',
+    label: '复选框',
     key: 'checkbox',
     props: {
       options: [
@@ -106,7 +106,7 @@ export const normal = [
   },
   {
     type: 'ASlider',
-    name: '滑块',
+    label: '滑块',
     key: 'slider',
     rules: {
       rules: [{ required: false, message: '请选择' }] 
@@ -114,7 +114,7 @@ export const normal = [
   },
   {
     type: 'ARate',
-    name: '评分',
+    label: '评分',
     key: 'rate',
     rules: {
       rules: [{ required: false, message: '请选择' }] 
@@ -122,7 +122,7 @@ export const normal = [
   },
   {
     type: 'ATimePicker',
-    name: '时间',
+    label: '时间',
     key: 'time',
     props: {
       valueFormat: 'HH:mm:ss',
@@ -134,7 +134,7 @@ export const normal = [
   },
   {
     type: 'ADatePicker',
-    name: '日期',
+    label: '日期',
     key: 'date',
     props: {
       valueFormat: 'YYYY-MM-DD',
@@ -147,7 +147,7 @@ export const normal = [
   },
   {
     type: 'KYearPicker',
-    name: '年份',
+    label: '年份',
     key: 'year',
     props: {
       valueFormat: 'YYYY',
@@ -160,7 +160,7 @@ export const normal = [
   },
   {
     type: 'ATreeSelect',
-    name: '树',
+    label: '树',
     key: 'tree',
     props: {
       treeData: [
@@ -194,7 +194,7 @@ export const normal = [
   },
   {
     type: 'ACascader',
-    name: '级联',
+    label: '级联',
     key: 'cascader',
     props: {
       expandTrigger: "hover",
@@ -240,7 +240,7 @@ export const normal = [
   },
   {
     type: 'ATextarea',
-    name: '文本域',
+    label: '文本域',
     key: 'textarea',
     props: {
       placeholder: '请输入'
@@ -251,9 +251,10 @@ export const normal = [
   },
   {
     type: 'KUpload',
-    name: '文件上传',
+    label: '文件上传',
     key: 'upload',
     props: {
+      accept: 'xlsx',
       message: '请选择文件'
     },
     rules: {
@@ -265,7 +266,7 @@ export const normal = [
 export const dynamic = [
   {
     type: 'ASelect',
-    name: '选择',
+    label: '选择',
     key: 'select',
     props: {
       placeholder: '请选择',
@@ -287,7 +288,7 @@ export const dynamic = [
   },
   {
     type: 'ACheckboxGroup',
-    name: '复选框',
+    label: '复选框',
     key: 'checkbox',
     props: {
       options: [
@@ -308,7 +309,7 @@ export const dynamic = [
   },
   {
     type: 'KYearPicker',
-    name: '年份',
+    label: '年份',
     key: 'year',
     props: {
       valueFormat: 'YYYY',
@@ -335,7 +336,7 @@ export const options = arr
 export const virtual = [
   {
     type: 'KSelect',
-    name: '选择',
+    label: '选择',
     key: 'k-select',
     props: {
       mode: 'multiple',
@@ -345,105 +346,5 @@ export const virtual = [
     rules: {
       rules: [{ required: false, message: '请选择' }] 
     }
-  },
-]
-
-const source = []
-for(let i = 0; i < 1000; i ++){
-  source.push({
-    key: i,
-    sex: '男',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号',
-  })
-}
-
-export const data = source
-export const columns = [
-  {
-    key: '$$selection',
-    type: 'selection',
-    fixed: 'left',
-    width: 36,
-    colResize: false
-  },
-  {
-    label: '序号',
-    key: '$$index',
-    type: 'index',
-    width: 60,
-    fixed: 'left',
-    align: 'center',
-    colResize: false
-  },
-  {
-    label: '名字',
-    key: 'name',
-    queryField: 'name',
-    queryComponent: 'query-checkbox',
-    queryAttrs: {
-      list: [
-        { value: '1', label: '选项1' },
-        { value: '2', label: '选项2' },
-        { value: '3', label: '选项3' },
-      ]
-    },
-    fixed: 'left',
-    width: 100,
-    colResize: false
-  },
-  {
-    label: '年龄',
-    key: 'age',
-    width: 70,
-    sortable: true,
-    colResize: false
-  },
-  {
-    label: '地址',
-    key: 'address',
-    width: 180,
-    colResize: false
-  },
-  {
-    label: '名字2',
-    key: 'name2',
-    width: 120,
-    colResize: false
-  },
-  {
-    label: '年龄2',
-    key: 'age2',
-    width: 120,
-    sortable: true,
-    colResize: false
-  },
-  {
-    label: '地址2',
-    key: 'address2',
-    width: 120,
-    colResize: false
-  },
-  {
-    label: '名字3',
-    key: 'name3',
-    width: 120,
-    sortable: true,
-    colResize: false
-  },
-  {
-    label: '年龄3',
-    key: 'age3',
-    width: 120,
-    sortable: true,
-    colResize: false
-  },
-  {
-    label: '地址3',
-    key: 'address3',
-    fixed: 'right',
-    width: 120,
-    colResize: false
   },
 ]
