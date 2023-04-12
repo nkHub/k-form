@@ -2,7 +2,7 @@
 node_modules
 /dist
 test
-pnpm-lock.yarml
+pnpm-lock.yaml
 
 # local env files
 .env.local
