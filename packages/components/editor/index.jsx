@@ -60,6 +60,9 @@ export default {
       const copyItem = clone(this.form[index])
       if(!copyItem.props) copyItem.props = {}
       if(!copyItem.rules) copyItem.rules = {}
+      const { placeholder } = copyItem.props
+      // 是否应该更新其他属性，正常都是单属性更新
+      let shouldUpdate = true
       // 默认值的设置
       if('defaultChecked' in data || 'defaultValue' in data){
         const key = 'defaultChecked' in data ? 'defaultChecked' : 'defaultValue'
@@ -67,17 +70,27 @@ export default {
         delete data[key]
         copyItem.rules.initialValue = old
       }
+       // 修改必填
       if('required' in data){
+        shouldUpdate = false
         if(!copyItem.rules.rules){
           copyItem.rules.rules = [{ required: data.required }]
         }else{
           copyItem.rules.rules[0].required = data.required
         }
+        copyItem.rules.rules[0].message = placeholder
       }
-      const target = type ? copyItem[type] : copyItem
-      // 更新属性覆盖
-      for(let k in data){
-        target[k] = data[k]
+      // 修改默认提示文字
+      if('placeholder' in data && copyItem.rules.rules){
+        copyItem.rules.rules[0].message = data.placeholder || placeholder
+      }
+      // 其他属性
+      if(shouldUpdate){
+        const target = type ? copyItem[type] : copyItem
+        // 更新属性覆盖
+        for(let k in data){
+          target[k] = data[k]
+        }
       }
       this.$set(this.form, index, copyItem)
     },
