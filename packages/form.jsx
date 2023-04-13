@@ -113,8 +113,10 @@ export default {
           slots: {},
           ref: `${component.name}-${item.key}`,
         };
+        // console.log(component.name, props)
         return h(component, props);
       };
+      
       this.$set(this.items, component.name, render);
     },
     // 表单变动

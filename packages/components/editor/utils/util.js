@@ -13,7 +13,7 @@ const names = {
   // formItem
   label: '标签名称',
   labelCol: '标签宽度',
-  wrapperCol: '表单组件宽度',
+  wrapperCol: '组件宽度',
   help: '帮助信息',
   extra: '额外信息',
   required: '必填',

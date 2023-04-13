@@ -87,7 +87,6 @@ export default {
       beforeUpload,
       customRequest,
     };
-    console.log('upload', props)
     return (
       <Upload {...{ props }} onchange={handleChange}>
         <Button disabled={disabled}>

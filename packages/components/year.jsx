@@ -5,7 +5,7 @@ export default {
   name: "KYearPicker",
   model: {
     prop: "value",
-    event: "panelChange",
+    event: "change",
   },
   props: mergeDefaultProps(DatePicker.props, {}, ["open", "mode"]),
   data() {
@@ -13,13 +13,17 @@ export default {
       isOpen: false,
     };
   },
+  watch: {
+    value(v){
+      console.log('value', v)
+    }
+  },
   methods: {
     toggleVisible() {
       this.isOpen = !this.isOpen;
     },
-    panelChange(value) {
-      const { valueFormat } = this
-      this.$emit("panelChange", value && (valueFormat ? value.format(valueFormat): value));
+    panelChange() {
+      this.$emit("change", ...arguments);
       this.toggleVisible();
     },
     visibleChange(visible) {

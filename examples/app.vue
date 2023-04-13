@@ -55,8 +55,8 @@ export default {
     }
   },
   methods: {
-    formChange() {
-      // console.log('formChange', e)
+    formChange(e) {
+      console.log('formChange', e)
     },
     handleSubmit(key) {
       this.$refs[key].validateFields((err, values) => {
