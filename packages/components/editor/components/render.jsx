@@ -11,7 +11,8 @@ export default{
   methods: {
     // 清空选中
     handleSelect(e){
-      const isSelf = e.target.classList.contains('k-editor-render-form')
+      const parent = e.target.parentNode.parentNode
+      const isSelf = parent.classList.contains('k-editor-render-form')
       if(isSelf) this.editor.handleFocus('')
     },
     handleEditor(key){
