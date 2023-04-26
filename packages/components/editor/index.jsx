@@ -1,6 +1,7 @@
 import { Row, Col } from "ant-design-vue";
 import KEditorRender from './components/render';
 import KEditorAttrs from './components/attrs';
+import KEditorTypes from './components/types';
 import { types, config, form } from "./utils/editor.default";
 import { KEditorProps } from "./props";
 import { clone, getRandomStr } from "./utils/util";
@@ -29,16 +30,7 @@ export default {
     renderTypes() {
       const { handleAdd } = this
       return types.map((v) => {
-        return [
-          <div class="type-name">{v.name}</div>,
-          <Row class="type-list" gutter={[6, 6]}>
-            {v.children.map((c) => (
-              <Col span={12}>
-                <div class="type-item" onClick={() => handleAdd(c)}>{c.name}</div>
-              </Col>
-            ))}
-          </Row>,
-        ];
+        return (<KEditorTypes data={v} onTap={handleAdd}/>)
       });
     },
     // 更新表单配置渲染
@@ -100,7 +92,6 @@ export default {
     },
     // 设置焦点实例
     handleFocus(key){
-      console.log('handleFocus', key)
       this.focus = key
     },
     // 添加表单
@@ -138,6 +129,11 @@ export default {
       this.handleFocus(copyItem.id)
       this.form.splice(keyIndex + 1, 0, copyItem)
     },
+    // 移动表单
+    handleMove(oIndex, nIndex){
+      const item = this.form.splice(oIndex, 1)
+      this.form.splice(nIndex, 0, item[0])
+    },
     // 预览表单
     handlePreview(){
       console.log('preview')
@@ -161,12 +157,11 @@ export default {
     const { height, renderTypes, form, config, handleUpdate, handleFormUpdate } = this;
     // 渲染参数
     const renderProps = { formList: form, ...config }
-    console.log('EditorConfig', config)
     return (
       <div class="k-editor" style={{ height }}>
         <Row type="flex" gutter={10}>
           {/* 栏目渲染器 */}
-          <Col span={6} class="k-list">
+          <Col ref="types" span={6} class="k-list">
             {renderTypes()}
           </Col>
           {/* 内容渲染器 */}

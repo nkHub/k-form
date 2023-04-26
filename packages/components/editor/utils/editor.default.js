@@ -182,18 +182,18 @@ export const types = [
       },
     ]
   },
-  {
-    name: '模版',
-    children: [
-      {
-        name: '测试',
-        type: 'Test',
-        config: {
-          key: 'template_test'
-        }
-      }
-    ]
-  },
+  // {
+  //   name: '模版',
+  //   children: [
+  //     {
+  //       name: '测试',
+  //       type: 'Test',
+  //       config: {
+  //         key: 'template_test'
+  //       }
+  //     }
+  //   ]
+  // },
 ]
 
 // 默认配置

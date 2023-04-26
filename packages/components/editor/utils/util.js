@@ -154,7 +154,6 @@ export function mergeProps2form(value, item, props){
   temp.push(...props2form(normal, value))
   temp.push(...props2form(item, value))
   temp.push(...props2form(props, value))
-  console.log('mergeProps2form', temp)
   return temp
 }
 

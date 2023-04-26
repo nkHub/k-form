@@ -2,7 +2,7 @@ import { Space, Button } from "ant-design-vue";
 import { KEditorRenderProps } from "../props";
 import KEditorDragger from './dragger';
 import KFormList from "~/form";
-
+import Sortable from "sortablejs";
 
 export default{
   name: "k-editor-render",
@@ -17,7 +17,49 @@ export default{
     handleEditor(key){
       const type = key[0].toUpperCase() + key.slice(1)
       this.editor[`handle${type}`]()
+    },
+    // 初始化可拖拽
+    initSortableObj(){
+      // 拖拽管理
+      const that = this
+      if(this.$st) this.$st.destroy()
+      const row = this.$refs.form.querySelector('.k-form-list>.ant-row')
+      this.$st = new Sortable(row, {
+        group: {
+          name: 'render',
+          put: true
+        },
+        handle: '.k-editor-dragger-item-drag',
+        draggable: '.k-editor-dragger-item',
+        ghostClass: '.hide',
+        animation: 150,
+        onAdd(evt){
+          const { dataTransfer } = evt.originalEvent
+          const item = JSON.parse(dataTransfer.getData('type'))
+          evt.item.parentNode.removeChild(evt.item)
+          dataTransfer.clearData()
+          that.editor.handleAdd(item)
+        },
+        onEnd(evt){
+          const { oldIndex, newIndex } = evt
+          that.editor.handleMove(oldIndex, newIndex)
+        }
+      })
     }
+  },
+  watch: {
+    formList: {
+      handler(){
+        // 拖拽管理
+        this.$nextTick(() => {
+          this.initSortableObj()
+        })
+      },
+      immediate: true
+    }
+  },
+  beforeDestroy(){
+    if(this.$st) this.$st.destroy()
   },
   render(){
     const { handleSelect, handleEditor } = this
@@ -39,7 +81,6 @@ export default{
       })
     }
     const isEmpty = temp.formList.length == 0
-    console.log('render', temp.formList)
     return(
       <div class={ 'k-editor-render ' + (isEmpty ? 'empty' : '') }>
         <div class="k-editor-render-btns">
@@ -50,7 +91,7 @@ export default{
             <Button type="primary" onClick={() => handleEditor('export')}>导出Schema</Button>
           </Space>
         </div>
-        <div class="k-editor-render-form" onClick={handleSelect}>
+        <div ref="form" class="k-editor-render-form" onClick={handleSelect}>
           <KFormList { ...{ props: temp } }/>
         </div>
       </div>

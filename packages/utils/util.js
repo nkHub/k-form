@@ -74,3 +74,12 @@ export function getPropsData(props, instance, defaultVal){
   }
   return Object.assign({}, propsObj, defaultVal)
 }
+
+// 尝试解析数据
+export function jsonParse(str, def){
+  try{
+    return JSON.parse(str)
+  }catch(_e){
+    return def
+  }
+}
