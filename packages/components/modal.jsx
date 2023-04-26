@@ -28,7 +28,6 @@ export default {
     const formProps = getPropsData(KFormList.props, that, {
       showSubmit: false
     });
-    console.log('modalProps', modalProps)
     return (
       <Modal
         {...{ props: modalProps }}
