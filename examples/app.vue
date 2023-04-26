@@ -29,9 +29,11 @@
         </Card>
         <div></div>
       </Space>
-      <!-- 弹窗 -->
-      <k-form-modal title="弹窗表单" width="500px" :visible.sync="mVisible" :form-list="dynamic" @submit="handleMSubmit" />
-      <k-form-drawer title="抽屉表单" width="500px" :visible.sync="dVisible" :form-list="dynamic" @submit="handleMSubmit" />
+    </ConfigProvider>
+    <!-- 弹窗 -->
+    <ConfigProvider :locale="locale">
+      <k-form-modal ref="modal" title="弹窗表单" width="500px" :visible.sync="mVisible" :form-list="dynamic" @submit="handleMSubmit" />
+      <k-form-drawer ref="drawer" title="抽屉表单" width="500px" :visible.sync="dVisible" :form-list="dynamic" @submit="handleMSubmit" />
     </ConfigProvider>
   </div>
 </template>
